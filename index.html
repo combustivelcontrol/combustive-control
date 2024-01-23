@@ -10,17 +10,17 @@
       text-align: center;
       margin: 0;
       padding: 0;
-      border: 10px solid #3498db; /* Cor da borda */
-      box-sizing: border-box; /* Inclui a borda no modelo de caixa */
-      margin-bottom: 20px; /* Ajuste para 2 centímetros */
+      border: 10px solid #3498db;
+      box-sizing: border-box;
+      margin-bottom: 20px;
     }
 
     .panel-container {
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-top: 20px; /* Ajuste para aumentar a margem superior */
-      margin-bottom: 65px; /* Ajuste para aumentar a margem inferior */
+      margin-top: 20px;
+      margin-bottom: 65px;
     }
 
     .image-container {
@@ -42,16 +42,15 @@
     .text-container {
       border: 2px solid #3498db;
       padding: 20px;
-      margin: 20px 20px 40px 20px; /* Adicionado margem inferior para separar do botão "Enviar" */
+      margin: 20px 20px 40px 20px;
       width: 70%;
-      box-sizing: border-box; /* Inclui a borda no modelo de caixa */
+      box-sizing: border-box;
     }
 
     p {
-      font-size: 14px; /* Alteração para tamanho 14px */
+      font-size: 14px;
       color: #333;
       text-transform: uppercase;
-      font-weight: bold; /* Adicionado negrito */
       margin: 0;
     }
 
@@ -79,30 +78,22 @@
       margin-top: 10px;
     }
 
-    .captured-images {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 20px;
-    }
-
-    .captured-image {
-      width: 30%;
-    }
-
-    .captured-image img {
-      width: 100%;
-      height: 100%;
-      border-radius: 10px;
-    }
-
     .video-list {
       margin-top: 20px;
     }
 
     video {
       width: 100%;
-      max-width: 300px; /* Ajuste conforme necessário */
+      max-width: 300px;
       margin-bottom: 10px;
+    }
+
+    .captured-photo {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin: 5px;
     }
 
     .success-message {
@@ -117,39 +108,35 @@
       position: fixed;
       bottom: 0;
       width: 100%;
-      text-align: center; /* Centralizar o texto */
-      margin-top: 25px; /* Ajuste para 25px abaixo do botão "Enviar" */
+      text-align: center;
+      margin-top: 25px;
     }
 
     footer p {
-      font-size: 12px; /* Ajuste para tamanho 12px */
-      text-transform: uppercase; /* Caixa alta */
+      font-size: 12px;
+      text-transform: uppercase;
       margin: 0;
-      white-space: pre-line; /* Permitir quebras de linha */
+      white-space: pre-line;
     }
   </style>
 </head>
 <body>
 
 <div class="panel-container">
-
   <div class="image-container">
     <img src="https://cdn-icons-png.flaticon.com/512/891/891035.png" alt="Tanque de Combustível">
   </div>
 
   <div class="text-container">
-    <p style="font-size: 14px; text-transform: uppercase; font-weight: bold;">Bem-vindo ao Painel de Controle. Selecione uma opção abaixo para capturar uma foto ou vídeo:</p>
+    <p>Bem-vindo ao Painel de Controle. Selecione uma opção abaixo para capturar uma foto ou vídeo:</p>
   </div>
 
   <label for="fileInput">Capturar Foto ou Vídeo</label>
   <input type="file" accept="image/*,video/*" capture="camera" id="fileInput">
-  <button onclick="enviarArquivo()">Enviar</button>
-
-  <div class="captured-images" id="capturedImages"></div>
+  <button onclick="capturarFoto()">Capturar Foto</button>
 
   <div class="video-list" id="videoList"></div>
   <div class="success-message" id="successMessage"></div>
-
 </div>
 
 <footer>
@@ -157,42 +144,23 @@
 </footer>
 
 <script>
-  function enviarArquivo() {
+  var fotosCapturadas = 0;
+
+  function capturarFoto() {
     var fileInput = document.getElementById('fileInput');
-    var arquivo = fileInput.files[0];
-
-    // Limpar a lista de vídeos
     var videoList = document.getElementById('videoList');
+    var successMessage = document.getElementById('successMessage');
+
+    // Limpar a lista de vídeos e mensagem de sucesso
     videoList.innerHTML = '';
+    successMessage.innerHTML = '';
 
-    // Exibir as três imagens capturadas
-    var capturedImagesContainer = document.getElementById('capturedImages');
-    capturedImagesContainer.innerHTML = '';
+    if (fotosCapturadas < 3) {
+      var arquivo = fileInput.files[0];
 
-    if (arquivo) {
-      // Aqui você pode implementar a lógica para enviar o arquivo para o
-      if (arquivo.type.startsWith('image')) {
-        // Se o arquivo for uma imagem, exiba abaixo do botão "Enviar"
-        for (var i = 0; i < 3; i++) {
-          exibirImagem(arquivo);
-        }
-      }
-    }
-  }
+      if (arquivo && arquivo.type.startsWith('image/')) {
+        // Exibir a foto captur
 
-  function exibirImagem(arquivo) {
-    var capturedImagesContainer = document.getElementById('capturedImages');
-
-    var imagem = document.createElement('img');
-    imagem.src = URL.createObjectURL(arquivo);
-
-    var imagemContainer = document.createElement('div');
-    imagemContainer.classList.add('captured-image');
-    imagemContainer.appendChild(imagem);
-
-    capturedImagesContainer.appendChild(imagemContainer);
-  }
-</script>
 
 </body>
 </html>
