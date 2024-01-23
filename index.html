@@ -10,8 +10,8 @@
       text-align: center;
       margin: 0;
       padding: 0;
-      border: 10px solid #3498db;
       box-sizing: border-box;
+      border: 10px solid #3498db;
       margin-bottom: 20px;
     }
 
@@ -42,7 +42,7 @@
     .text-container {
       border: 2px solid #3498db;
       padding: 20px;
-      margin: 20px 20px 40px 20px;
+      margin: 20px;
       width: 70%;
       box-sizing: border-box;
     }
@@ -58,24 +58,23 @@
       display: none;
     }
 
-    label {
+    label, button {
       display: inline-block;
       padding: 10px 20px;
-      background-color: #3498db;
-      color: #fff;
-      cursor: pointer;
       border-radius: 5px;
+      cursor: pointer;
       margin-top: 10px;
     }
 
+    label {
+      background-color: #3498db;
+      color: #fff;
+    }
+
     button {
-      padding: 10px 20px;
       background-color: #2ecc71;
       color: #fff;
       border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 10px;
     }
 
     .video-list {
@@ -86,14 +85,6 @@
       width: 100%;
       max-width: 300px;
       margin-bottom: 10px;
-    }
-
-    .captured-photo {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
-      border-radius: 10px;
-      margin: 5px;
     }
 
     .success-message {
@@ -133,33 +124,42 @@
 
   <label for="fileInput">Capturar Foto ou Vídeo</label>
   <input type="file" accept="image/*,video/*" capture="camera" id="fileInput">
-  <button onclick="capturarFoto()">Capturar Foto</button>
+  <button onclick="enviarArquivo()">Enviar</button>
 
   <div class="video-list" id="videoList"></div>
   <div class="success-message" id="successMessage"></div>
 </div>
 
 <footer>
-  <p>Este conjunto de diretrizes estabelece as bases para o uso ético da ferramenta, garantindo transparência, integridade e responsabilidade. Além disso, o código político visa assegurar a imparcialidade na apresentação de informações, evitando viés, e promover uma participação equitativa, contribuindo para um ambiente online diverso e respeitoso.</p>
+  <p>Este conjunto de diretrizes estabelece as bases para o uso ético da ferramenta, garantindo transparência, integridade e responsabilidade...</p>
 </footer>
 
 <script>
-  var fotosCapturadas = 0;
-
-  function capturarFoto() {
+  function enviarArquivo() {
     var fileInput = document.getElementById('fileInput');
+    var arquivo = fileInput.files[0];
+
     var videoList = document.getElementById('videoList');
     var successMessage = document.getElementById('successMessage');
 
-    // Limpar a lista de vídeos e mensagem de sucesso
-    videoList.innerHTML = '';
-    successMessage.innerHTML = '';
+    if (arquivo) {
+      // Lógica para enviar o arquivo
 
-    if (fotosCapturadas < 3) {
-      var arquivo = fileInput.files[0];
+      // Exibir o vídeo ou imagem na lista
+      if (arquivo.type.startsWith('image/')) {
+        videoList.innerHTML += `<img src="${URL.createObjectURL(arquivo)}" alt="Imagem">`;
+      } else if (arquivo.type.startsWith('video/')) {
+        videoList.innerHTML += `<video controls><source src="${URL.createObjectURL(arquivo)}" type="${arquivo.type}"></video>`;
+      }
 
-      if (arquivo && arquivo.type.startsWith('image/')) {
-        // Exibir a foto captur
+      // Exibir mensagem de sucesso
+      successMessage.textContent = 'Arquivo enviado com sucesso!';
+    }
+  }
+</script>
+</body>
+</html>
+
 
 
 </body>
