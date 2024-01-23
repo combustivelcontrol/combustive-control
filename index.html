@@ -8,14 +8,19 @@
     body {
       font-family: 'Arial', sans-serif;
       text-align: center;
-      margin: 20px;
+      margin: 0;
+      padding: 0;
+      border: 10px solid #3498db; /* Cor da borda */
+      box-sizing: border-box; /* Inclui a borda no modelo de caixa */
+      margin-bottom: 20px; /* Ajuste para 2 centímetros */
     }
 
-    p {
-      font-size: 18px;
-      color: #333;
-      text-transform: uppercase;
-      margin-top: 20px;
+    .panel-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px; /* Ajuste para aumentar a margem superior */
+      margin-bottom: 65px; /* Ajuste para aumentar a margem inferior */
     }
 
     .image-container {
@@ -28,9 +33,26 @@
     }
 
     img {
-      max-width: 100%;
-      height: auto;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       border-radius: 50%;
+    }
+
+    .text-container {
+      border: 2px solid #3498db;
+      padding: 20px;
+      margin: 20px 20px 40px 20px; /* Adicionado margem inferior para separar do botão "Enviar" */
+      width: 70%;
+      box-sizing: border-box; /* Inclui a borda no modelo de caixa */
+    }
+
+    p {
+      font-size: 14px; /* Alteração para tamanho 14px */
+      color: #333;
+      text-transform: uppercase;
+      font-weight: bold; /* Adicionado negrito */
+      margin: 0;
     }
 
     input[type="file"] {
@@ -56,37 +78,113 @@
       cursor: pointer;
       margin-top: 10px;
     }
+
+    .captured-image {
+      margin-top: 20px;
+    }
+
+    .captured-image img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+    }
+
+    .video-list {
+      margin-top: 20px;
+    }
+
+    video {
+      width: 100%;
+      max-width: 300px; /* Ajuste conforme necessário */
+      margin-bottom: 10px;
+    }
+
+    .success-message {
+      color: #2ecc71;
+      font-size: 18px;
+      margin-top: 10px;
+    }
+
+    footer {
+      background-color: #f2f2f2;
+      padding: 10px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      text-align: center; /* Centralizar o texto */
+      margin-top: 25px; /* Ajuste para 25px abaixo do botão "Enviar" */
+    }
+
+    footer p {
+      font-size: 12px; /* Ajuste para tamanho 12px */
+      text-transform: uppercase; /* Caixa alta */
+      margin: 0;
+      white-space: pre-line; /* Permitir quebras de linha */
+    }
   </style>
 </head>
 <body>
 
-<div class="image-container">
-  <img src="https://cdn-icons-png.flaticon.com/512/891/891035.png" alt="Tanque de Combustível">
+<div class="panel-container">
+
+  <div class="image-container">
+    <img src="https://cdn-icons-png.flaticon.com/512/891/891035.png" alt="Tanque de Combustível">
+  </div>
+
+  <div class="text-container">
+    <p style="font-size: 14px; text-transform: uppercase; font-weight: bold;">Bem-vindo ao Painel de Controle. Selecione uma opção abaixo para capturar uma foto ou vídeo:</p>
+  </div>
+
+  <label for="fileInput">Capturar Foto ou Vídeo</label>
+  <input type="file" accept="image/*,video/*" capture="camera" id="fileInput">
+  <button onclick="enviarArquivo()">Enviar</button>
+
+  <div class="captured-image" id="capturedImage"></div>
+
+  <div class="video-list" id="videoList"></div>
+  <div class="success-message" id="successMessage"></div>
+
 </div>
 
-<p>Bem-vindo ao Painel de Controle. Selecione uma opção abaixo para capturar uma foto ou vídeo:</p>
-
-<label for="fileInput">Capturar Foto ou Vídeo</label>
-<input type="file" accept="image/*,video/*" capture="camera" id="fileInput">
-<button onclick="enviarArquivo()">Enviar</button>
+<footer>
+  <p>Este conjunto de diretrizes estabelece as bases para o uso ético da ferramenta, garantindo transparência, integridade e responsabilidade. Além disso, o código político visa assegurar a imparcialidade na apresentação de informações, evitando viés, e promover uma participação equitativa, contribuindo para um ambiente online diverso e respeitoso.</p>
+</footer>
 
 <script>
   function enviarArquivo() {
     var fileInput = document.getElementById('fileInput');
     var arquivo = fileInput.files[0];
 
+    // Limpar a lista de vídeos
+    var videoList = document.getElementById('videoList');
+    videoList.innerHTML = '';
+
+    // Exibir a imagem capturada
+    var capturedImageContainer = document.getElementById('capturedImage');
+    capturedImageContainer.innerHTML = '';
+
     if (arquivo) {
-      // Aqui você pode implementar a lógica para enviar o arquivo para o painel de controle.
-      // Por exemplo, você pode usar AJAX para enviar o arquivo para o servidor.
-      console.log('Arquivo selecionado:', arquivo);
-    } else {
-      console.log('Nenhum arquivo selecionado.');
+      // Aqui você pode implementar a lógica para enviar o arquivo para o
+      if (arquivo.type.startsWith('image')) {
+        // Se o arquivo for uma imagem, exiba abaixo do botão "Enviar"
+        exibirImagem(arquivo);
+      }
     }
+  }
+
+  function exibirImagem(arquivo) {
+    var capturedImageContainer = document.getElementById('capturedImage');
+
+    var imagem = document.createElement('img');
+    imagem.src = URL.createObjectURL(arquivo);
+
+    var imagemContainer = document.createElement('div');
+    imagemContainer.classList.add('captured-image');
+    imagemContainer.appendChild(imagem);
+
+    capturedImageContainer.appendChild(imagemContainer);
   }
 </script>
 
 </body>
 </html>
-</body>
-</html>
-
