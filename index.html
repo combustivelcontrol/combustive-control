@@ -59,9 +59,13 @@
       // Limpar input de arquivo para permitir novas capturas
       fileInput.value = '';
     }
+
+    // Exibir a imagem novamente se houver uma nova captura
+    if (imagemCapturada) {
+      imagemCapturada.style.display = 'block'; // ou 'inline' dependendo do seu layout
+    }
   }
 </script>
 </body>
 </html>
-
 
