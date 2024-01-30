@@ -159,7 +159,82 @@
 </script>
 </body>
 </html>
+Esse código organiza as seções do HTML e os estilos CSS para torná-los mais legíveis e compreensíveis. Se precisar de mais alguma coisa, por favor, me avise!
 
+User
+apos eu clicar em captura de foto quero q apareça a iamagem abaixo 
+ChatGPT
+Para atingir esse objetivo, você pode fazer algumas modificações no código JavaScript para exibir a imagem capturada abaixo do botão de envio. Aqui está uma versão modificada do seu script para alcançar isso:
+
+html
+Copy code
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel de Controle</title>
+  <style>
+    /* Estilos aqui ... */
+  </style>
+</head>
+<body>
+
+<div class="panel-container">
+  <div class="image-container">
+    <img src="https://cdn-icons-png.flaticon.com/512/891/891035.png" alt="Tanque de Combustível">
+  </div>
+
+  <div class="text-container">
+    <p>Bem-vindo ao Painel de Controle. Selecione uma opção abaixo para capturar uma foto ou vídeo:</p>
+  </div>
+
+  <label for="fileInput">Capturar Foto ou Vídeo</label>
+  <input type="file" accept="image/*,video/*" capture="camera" id="fileInput">
+  <button onclick="enviarArquivo()">Enviar</button>
+
+  <div class="captured-image" id="capturedImageContainer"></div>
+
+  <div class="video-list" id="videoList"></div>
+  <div class="success-message" id="successMessage"></div>
+</div>
+
+<footer>
+  <p>Este conjunto de diretrizes estabelece as bases para o uso ético da ferramenta, garantindo transparência, integridade e responsabilidade...</p>
+</footer>
+
+<script>
+  function enviarArquivo() {
+    var fileInput = document.getElementById('fileInput');
+    var arquivo = fileInput.files[0];
+
+    var capturedImageContainer = document.getElementById('capturedImageContainer');
+    var videoList = document.getElementById('videoList');
+    var successMessage = document.getElementById('successMessage');
+
+    if (arquivo) {
+      // Lógica para enviar o arquivo
+
+      // Exibir o vídeo ou imagem na lista
+      if (arquivo.type.startsWith('image/')) {
+        // Exibir a imagem capturada abaixo do botão
+        capturedImageContainer.innerHTML = `<img src="${URL.createObjectURL(arquivo)}" alt="Imagem Capturada">`;
+        // Limpar a lista de vídeos
+        videoList.innerHTML = '';
+      } else if (arquivo.type.startsWith('video/')) {
+        // Exibir o vídeo na lista de vídeos
+        videoList.innerHTML += `<video controls><source src="${URL.createObjectURL(arquivo)}" type="${arquivo.type}"></video>`;
+        // Limpar a imagem capturada
+        capturedImageContainer.innerHTML = '';
+      }
+
+      // Exibir mensagem de sucesso
+      successMessage.textContent = 'Arquivo enviado com sucesso!';
+    }
+  }
+</script>
+</body>
+</html>
 
 
 </body>
