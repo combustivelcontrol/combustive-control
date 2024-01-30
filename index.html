@@ -11,7 +11,13 @@
 <body>
 
 <div class="panel-container">
-  <!-- Seu conteúdo HTML existente -->
+  <div class="image-container">
+    <img id="imagemCapturada" src="https://cdn-icons-png.flaticon.com/512/891/891035.png" alt="Tanque de Combustível">
+  </div>
+
+  <div class="text-container">
+    <p>Bem-vindo ao Painel de Controle. Selecione uma opção abaixo para capturar uma foto ou vídeo:</p>
+  </div>
 
   <label for="fileInput">Capturar Foto ou Vídeo</label>
   <input type="file" accept="image/*,video/*" capture="camera" id="fileInput">
@@ -36,11 +42,10 @@
     if (arquivo) {
       // Lógica para enviar o arquivo
 
-      // Exibir o vídeo ou imagem na lista
-      if (arquivo.type.startsWith('image/')) {
-        videoList.innerHTML += `<img src="${URL.createObjectURL(arquivo)}" alt="Imagem">`;
-      } else if (arquivo.type.startsWith('video/')) {
-        videoList.innerHTML += `<video controls><source src="${URL.createObjectURL(arquivo)}" type="${arquivo.type}"></video>`;
+      // Ocultar a imagem ou vídeo capturado
+      var imagemCapturada = document.getElementById('imagemCapturada');
+      if (imagemCapturada) {
+        imagemCapturada.style.display = 'none';
       }
 
       // Exibir mensagem de sucesso
@@ -56,11 +61,6 @@
     }
   }
 </script>
-</body>
-</html>
-
-
-
 </body>
 </html>
 
